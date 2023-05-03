@@ -38,10 +38,8 @@ Tools/environment_install/install-prereqs-ubuntu.sh -y
 cd ~/ardupilot/ArduCopter
 ../Tools/autotest/sim_vehicle.py --map --console
 ```
-* Now refer to this link for a SITL example for a Quadcopter
-```sh
-https://ardupilot.org/dev/docs/copter-sitl-mavproxy-tutorial.html
-```
+* Now refer to this link for a SITL example for a Quadcopter: https://ardupilot.org/dev/docs/copter-sitl-mavproxy-tutorial.html
+
 
 * Now lets see SITL in Gazebo for better Visuals (Installing Gazebo Plugin):
 ```sh
