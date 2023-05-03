@@ -12,30 +12,76 @@ https://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html#sitl-sim
  ```sh
 git clone https://github.com/ShadowController/ardupilot
 cd ardupilot
+git submodule update --init --recursive
 ```
-
+* If submodule update is not working then do the following (Basically we are talling git to unilaterally use the https):
  ```sh
+git config --global url."https://github.com/".insteadOf git@github.com:
+git config --global url."https://".insteadOf git://
+```
+* Now run the submodule command again, it should work
+
+* Installing Dependencies:
+```sh
 cd ardupilot
+Tools/environment_install/install-prereqs-ubuntu.sh -y
 ```
-
-* To checkout to another branch
+* Now restart your system to make changes permanent.
+* Now its time to build the repository:
 ```sh
-hhh
+./waf configure --board sitl
+./waf copter
 ```
-# This is the repository for Mechatronics subdivision of AeRoVe.
+* Time to test if SITL is working or not:
 
-* This link:
 ```sh
-https://docs.google.com/document/d/1MuK6vTJQC3nsSfQkPhU_jaq8XQlOi85cbHek9mTFjV0/edit
+cd ~/ardupilot/ArduCopter
+../Tools/autotest/sim_vehicle.py --map --console
 ```
-contains the learning path in a very detailed fashion.
+* Now refer to this link for a SITL example for a Quadcopter
+```sh
+https://ardupilot.org/dev/docs/copter-sitl-mavproxy-tutorial.html
+```
 
-* But to tell you in short...
+* Now lets see SITL in Gazebo for better Visuals (Installing Gazebo Plugin):
+```sh
+git clone --recurse https://github.com/khancyr/ardupilot_gazebo
+cd ardupilot_gazebo
+mkdir build
+cd build
+cmake ..
+make -j4
+sudo make install
+```
+* Now start the Gazebo:
+```sh
+gazebo --verbose worlds/iris_arducopter_runway.world
+```
+* In another terminal start SITL using ArduPilot:
+```sh
+cd ~/ardupilot/ArduCopter
+../Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map
+```
 
-* The multirotor links tells you about fight dynamics
+* Now lets install QGroundControl:
+```sh
+sudo usermod -a -G dialout $USER
+sudo apt-get remove modemmanager -y
+sudo apt install gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl -y
+sudo apt install libqt5gui5 -y
+sudo apt install libfuse2 -y
+```
+* Now Use the following link to download AppImage of QGroundControl: https://d176tv9ibo4jno.cloudfront.net/latest/QGroundControl.AppImage
+* Move the App Image from Downloads to Home
+* Now make the App Image executable using following command:
+```sh
+chmod +x ./QGroundControl.AppImage
+```
+* Now run the App Image using following command:
+```sh
+./QGroundControl.AppImage
+```
+* Now lets install MavROS using the following link: https://docs.px4.io/main/en/ros/mavros_installation.html
+* Well Done! The installation part is over.
 
-* Learning solidworks is very important, so after watching the tutorial, try making some real life objects to get some good practice
- of it.
- 
-* The electronics link tells you about all the electronic parts that are used to make the drone, their specifications, models, 
- price and all. You dont need to memorize it, but take a look on it. 
+
