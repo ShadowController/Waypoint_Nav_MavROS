@@ -84,4 +84,5 @@ chmod +x ./QGroundControl.AppImage
 * Now lets install MavROS using the following link: https://docs.px4.io/main/en/ros/mavros_installation.html
 * Well Done! The installation part is over.
 
+# Time to Run:
 
